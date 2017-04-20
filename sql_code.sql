@@ -20,11 +20,6 @@ VALUES
 
 
 
-
-
-
-
-
 CREATE TABLE Courses (
   CourseID int NOT NULL,
   Department varchar(20) NOT NULL,
@@ -111,17 +106,41 @@ VALUES
 
 
 
+--For 4: Compute the average/highest/lowest score of an assignment;
+SELECT AVG(Points) FROM StudentScores WHERE AssignmentID = givenID
+SELECT MIN(Points) FROM StudentScores WHERE AssignmentID = givenID
+SELECT MAX(Points) FROM StudentScores WHERE AssignmentID = givenID
 
 
-
+--For 5: List all of the students in a given course;
 SET @cid = (SELECT CourseID FROM Courses WHERE CourseName = 'Database');
 
-SELECT FirstName, LastName FROM Students WHERE StudentID IN (SELECT StudentID FROM Enrollment WHERE CourseID = @cid);
-SELECT Score FROM PointsTable WHERE StudentID IN (SELECT StudentID FROM Enrollment WHERE CourseID = @cid);
+SELECT FirstName, LastName FROM Students WHERE
+  StudentID IN (
+  SELECT StudentID FROM Enrollment WHERE CourseID = @cid
+);
 
 
+--For 6 :List all of the students in a course and all of their scores on every assignment;
+SELECT s.StudentID, s.FirstName, s.LastName, e.CourseID, p.AssignmentID, p.Score 
+FROM Students s, Enrollment e, PointsTable p 
+WHERE s.StudentID = p.StudentID and p.StudentID = e.StudentID and e.CourseID = 3;
+
+--For 7: Add an assignment to a course;
 
 
+-- For 8: Change the percentages of the categories for a course;
+UPDATE Weights SET Percent = givenPercent WHERE Catergory = givenCategory;
 
 
+--For 9: Add 2 points to the score of each student on an assignment;
+ UPDATE PointsTable SET Score = Score + 2 WHERE AssignmentID = 2;
+
+
+--For 10: Add 2 points just to those students whose last name contains a ‘Q’.
+
+
+--For 11: Compute the grade for a student;
+
+--For 12: Compute the grade for a student, where the lowest score for a given category is dropped.
 
