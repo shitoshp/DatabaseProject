@@ -1,21 +1,16 @@
 CREATE TABLE Students (
-
-StudentID int NOT NULL,
-
-FirstName varchar(30) NOT NULL,
-
-LastName varchar(30) NOT NULL,
-
-Major varchar(20),
-
-PRIMARY KEY (StudentID)
+  StudentID int NOT NULL,
+  FirstName varchar(30) NOT NULL,
+  LastName varchar(30) NOT NULL,
+  Major varchar(20),
+  PRIMARY KEY (StudentID)
 
 );
 
 INSERT INTO Students(StudentID, FirstName, LastName, Major)
 VALUES 
 (3120, 'Shitosh', 'Parajuli', 'CS'),
-(3091, 'Sudheesh', 'Bhattarai', 'CS'),
+(3091, 'Sudheesh', 'Qhattarai', 'CS'),
 (3152, 'Gauri', 'Shankar', 'CS');
 
 
@@ -50,9 +45,6 @@ VALUES
 (3120, 1),
 (3091, 1);
 
-SELECT StudentID FROM Enrollment WHERE CourseID = 2016;
-
-
 
 
 CREATE TABLE Weights (
@@ -69,7 +61,6 @@ VALUES
 (1, 2014, 'Quiz', 100),
 (2, 2016, 'Test', 50);
 
-SELECT Category FROM Weights WHERE Percent = 50;
 
 
 CREATE TABLE Assignments (
@@ -138,6 +129,9 @@ UPDATE Weights SET Percent = givenPercent WHERE Catergory = givenCategory;
 
 
 --For 10: Add 2 points just to those students whose last name contains a ‘Q’.
+UPDATE PointsTable
+SET Score = Score + 2
+WHERE PointsTable.StudentID = (SELECT STUDENTID FROM STUDENTS WHERE PointsTable.StudentID = Students.StudentID  AND Students.LastName LIKE '%Q%' AND PointsTable.AssignmentID = 2);
 
 
 --For 11: Compute the grade for a student;
